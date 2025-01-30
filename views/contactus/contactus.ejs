@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<head>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- Include Common Header -->
+    <%- include('../common/header.ejs'); %>
+
+    <style>
+        .card-datatable {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- Include Navbar -->
+    <%- include('../common/navbar.ejs'); %>
+
+    <!-- Include Sidebar -->
+    <%- include('../common/sidebar.ejs'); %>
+
+    <!-- Content -->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper p-0">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <!-- Users List Section -->
+                <section class="app-user-list">
+                    <div class="card">
+                        <div class="card-datatable table-responsive pt-0">
+                            <table id="myTable" class="user-list-table table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Sr. No</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone No</th>
+                                        <th>Message</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% data.forEach((item, i) => { %>
+                                    <tr data-id="<%= item.id %>">
+                                        <td><%= i + 1 %></td>
+                                        <td><%= item.name %></td>
+                                        <td><%= item.email %></td>
+                                        <td><%= item.phone_no %></td>
+                                        <td><%= item.message %></td>
+                                        <td>
+                                            <a href="/viewcontact/<%= item.id %>" class="btn btn-success">
+                                                <i class="me-80" data-feather="eye"></i>
+                                            </a>
+                                            <a href="#" onclick="deleteUser('<%= item.id %>', event)" class="btn btn-danger">
+                                                <i class="me-80" data-feather="trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidenav Overlay and Drag Target -->
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- Include Footer -->
+    <%- include('../common/footer.ejs'); %>
+
+    <!-- Vendor JS -->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+
+    <!-- Page Vendor JS -->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <!-- Page Scripts -->
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+
+            $(".status-toggle").on("click", function() {
+                let button = $(this);
+                let userId = button.attr("data-id");
+                let currentStatus = button.attr("data-status");
+                let newStatus = currentStatus === "1" ? "0" : "1";
+
+                $.ajax({
+                    method: "POST",
+                    url: "/contactstatus",
+                    data: {
+                        id: userId,
+                        status: newStatus
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            if (newStatus === "1") {
+                                button.text("Active").removeClass("btn-info").addClass("btn-warning");
+                            } else {
+                                button.text("Inactive").removeClass("btn-warning").addClass("btn-info");
+                            }
+                            button.attr("data-status", newStatus);
+                            toastr.success('Status updated successfully.');
+                        } else {
+                            toastr.error('Status change failed.');
+                        }
+                    },
+                    error: function() {
+                        toastr.error('An error occurred while changing the status.');
+                    }
+                });
+            });
+        });
+
+        function deleteUser(user_id, event) {
+            event.preventDefault();
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+
+            swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: `/deletecontact/${user_id}`,
+                        data: { id: user_id },
+                        success: function(response) {
+                            if (response.success) {
+                                swalWithBootstrapButtons.fire({
+                                    title: "Deleted!",
+                                    text: "The contact has been deleted.",
+                                    icon: "success"
+                                }).then(() => {
+                                    $(`tr[data-id="${user_id}"]`).remove();
+                                });
+                            } else {
+                                swalWithBootstrapButtons.fire({
+                                    title: "Error!",
+                                    text: response.message || "Something went wrong.",
+                                    icon: "error"
+                                });
+                            }
+                        },
+                        error: function() {
+                            swalWithBootstrapButtons.fire({
+                                title: "Error!",
+                                text: "An error occurred while deleting the contact.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "The contact is safe :)",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="loading" data-textdirection="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>OTP Verification</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/page-auth.css">
+    <!-- END: Page CSS-->
+    <style>
+        .otp-input-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .otp-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static">
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+                <div class="auth-wrapper auth-v1 px-2">
+                    <div class="auth-inner py-2">
+                        <!-- OTP Verification Form -->
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a href="#" class="brand-logo">
+                                    <h2 class="brand-text text-primary ms-1">Passcode</h2>
+                                </a>
+                                <h1 class="card-title mb-1 text-center">Enter Passcode</h1>
+                                <form class="auth-forgot-password-form mt-2" action="/verifypasscode" method="POST">
+                                    <div class="mb-1">
+                                        <div class="otp-input-container">
+                                            <input type="text" id="otp1" name="otp1" class="otp-input" maxlength="1" autofocus />
+                                            <input type="text" id="otp2" name="otp2" class="otp-input" maxlength="1" />
+                                            <input type="text" id="otp3" name="otp3" class="otp-input" maxlength="1" />
+                                            <input type="text" id="otp4" name="otp4" class="otp-input" maxlength="1" />
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary w-100" type="submit">Verify Passcode</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /OTP Verification Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <script>
+        // Automatically move focus to next input when one is filled
+        document.querySelectorAll('.otp-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', function () {
+                if (input.value.length === input.maxLength) {
+                    // Move to the next input
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Backspace' && input.value === '') {
+                    // Move to the previous input
+                    if (index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

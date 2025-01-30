@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<%-include("common/header")%>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+    <!-- BEGIN: Header-->
+    <%-include("common/navbar")%>
+
+    <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <%-include("common/sidebar")%>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper  p-0">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- Dashboard Ecommerce Starts -->
+                <section id="dashboard-ecommerce">
+                    <div class="row match-height">
+                        <!-- Statistics Card -->
+                        <div class="col-12">
+                            <div class="card card-statistics">
+                                <!-- <div class="card-header">
+                                    <h4 class="card-title">Statistics</h4>
+                                    <div class="d-flex align-items-center">
+                                        <p class="card-text font-small-2 me-25 mb-0">Updated 1 month ago</p>
+                                    </div>
+                                </div> -->
+                                <div class="card-body statistics-body">
+                                    <div class="row">
+                                        <div  class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0 ">
+                                           <a  class="card_custom" href="/userlist" >
+                                            <div class="d-flex flex-row ">
+                                                <div class="avatar bg-light-primary me-2">
+                                                    <div class="avatar-content">
+                                                        <i data-feather="trending-up" class="avatar-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="my-auto">
+                                                    <h4 class="fw-bolder mb-0"><%= user %></h4>
+                                                    <h4 class="card-text font-small-3 mb-0">Users</h4>
+                                                </div>
+                                            </div>
+                                           </a>
+                                        </div>
+                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                                            <a href="/categorylist" class="card_custom">
+                                                <div class="d-flex flex-row">
+                                                    <div class="avatar bg-light-info me-2">
+                                                        <div class="avatar-content">
+                                                            <i data-feather="user" class="avatar-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="my-auto">
+                                                        <h4 class="fw-bolder mb-0"><%= category %></h4>
+                                                        <h4 class="card-text font-small-3 mb-0">Categories</h4>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                            <a href="/productlist" class="card_custom">
+                                                <div class="d-flex flex-row">
+                                                    <div class="avatar bg-light-danger me-2">
+                                                        <div class="avatar-content">
+                                                            <i data-feather="box" class="avatar-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="my-auto">
+                                                        <h4 class="fw-bolder mb-0"><%= product %></h4>
+                                                        <h4 class="card-text font-small-3 mb-0">Products</h4>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-3 col-sm-6 col-12">
+                                            <a href="#" class="card_custom">
+                                                <div class="d-flex flex-row">
+                                                    <div class="avatar bg-light-success me-2">
+                                                        <div class="avatar-content">
+                                                            <i data-feather="dollar-sign" class="avatar-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="my-auto">
+                                                        <h4 class="fw-bolder mb-0">$9745</h4>
+                                                        <p class="card-text font-small-3 mb-0">Revenue</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/ Statistics Card -->
+                    </div>
+                      <!-- Chart Section -->
+                <div class="col-xl-12 col-md-12 col-12 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Users Chart</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Chart Section -->
+
+                    <div class="row match-height">
+                        <div class="col-lg-4 col-12">
+                            <div class="row match-height">     
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row match-height">
+                    </div>
+                </section>
+                <!-- Dashboard Ecommerce ends -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <%-include("common/footer")%>
+   
+    <!-- END: Footer-->
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <!-- END: Page JS-->
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+    </script>
+     <script>
+        var chartData = JSON.parse('<%- JSON.stringify(chartData) %>');
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            var options = {
+                series: [{
+                    name: 'Users',
+                    data: chartData 
+                }],
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        dataLabels: {
+                            position: 'top', 
+                        },
+                    }
+                },
+
+                xaxis: {
+                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    position: 'bottom',
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    crosshairs: {
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                colorFrom: '#D8E3F0',
+                                colorTo: '#BED1E6',
+                                stops: [0, 100],
+                                opacityFrom: 0.4,
+                                opacityTo: 0.5,
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                    }
+                },
+                yaxis: {
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                    labels: {
+                        show: false,
+                        formatter: function(val) {
+                            return val;
+                        }
+                    }
+    
+                },
+                title: {
+                    text: '',
+                    floating: true,
+                    offsetY: 330,
+                    align: 'center',
+                    style: {
+                        color: '#444'
+                    }
+                }
+            };
+    
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+    
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
+    </script>
+</body>
+<!-- END: Body-->
+
+</html>
