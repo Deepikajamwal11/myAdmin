@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const { Validator } = require('node-input-validator');
 const db = require('../../models');
 const helper = require('../../helper/helper')
-const crypto = require('crypto');
+
 module.exports = {
   dashboard: async (req, res) => {
     try {
@@ -55,26 +55,25 @@ module.exports = {
       const find_user = await db.users.findOne({ where: { email, role: '0' } });
 
       if (!find_user) {
-        req.flash("error", "Invalid credentials");
+        req.flash("error", "Email not found");
         return res.redirect('/login');
       }
-
       const storedHash = find_user.password;
       const is_password = await bcrypt.compare(password, storedHash);
-
-      if (is_password) {
-        req.session.userId = find_user.id;
-        return res.redirect('/otp');
-      } else {
-        req.flash("error", "Invalid credentials");
+      if (!is_password) {
+        req.flash("error", "Incorrect password");
         return res.redirect('/login');
       }
+
+      req.session.userId = find_user.id;
+      return res.redirect('/otp');
+
     } catch (error) {
-      console.error('Error during login:', error);
       req.flash("error", "An error occurred");
       return res.redirect('/login');
     }
-  },
+},
+
   otpPage: async (req, res) => {
     try {
       const user = await db.users.findOne({ where: { id: req.session.userId } });
